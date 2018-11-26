@@ -5,9 +5,11 @@
 
 #include <Servo.h>
 
+// Servo Motor pins
 #define arm 9
 #define lid 10
 
+// Switches
 #define P1 2
 #define P2 3
 #define P3 4
@@ -16,11 +18,13 @@
 //#define P6 5
 //#define P7 6
 
+// Stepper Motor Driver L9110s h-bridge Connections
 #define S1 7
 #define S2 8
 #define S3 11
 #define S4 12
 
+// Home Switch
 #define Home 13
 
 Servo servoArm;               // Arm Servo
