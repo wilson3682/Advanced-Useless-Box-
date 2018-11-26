@@ -3,18 +3,6 @@
 // https://www.youtube.com/watch?time_continue=1&v=QDWSbA0mdQk
 // https://www.youtube.com/watch?annotation_id=annotation_1338334733&feature=iv&src_vid=QDWSbA0mdQk&v=gUw4Bogj7fA
 
-// A bit about the program and operation of the mailbox:
-//
-// The program is based mainly on functions. After turning on the power, all servos move to the starting position
-// and the platform moves to the "0" position, that is until the contactor is switched on. The loop () function reads
-// the values ??of the switches and closes the flap when no button is pressed. Also after a longer time without pressing the button,
-// it moves back to the "0" position. When you press any switch, the arm moves to the selected position
-// by performing the shift function to the right or to the left as many times as there is a difference from the last position.
-// Due to the imperfect arrangement of the buttons (despite the great effort) there are correction functions that
-// additionally "adjust" the arm to the position of the button. In the next step the flap opens and remains open until the "loop" loop () is executed.
-// Immediately after this the arm extends, which turns off the button and now depending on if there is something else pressed it hides halfway,
-// and if it was the last turned on button, it hides completely. Over and over again.
-
 #include <Servo.h>
 
 #define arm 9
@@ -33,7 +21,7 @@
 #define S3 11
 #define S4 12
 
-#define K1 13
+#define Home 13
 
 Servo servoArm;               // Arm Servo
 Servo servoLid;               // Lid Servo
@@ -72,14 +60,14 @@ void setup() {
   pinMode(S3, OUTPUT);
   pinMode(S4, OUTPUT);
 
-  pinMode(K1, INPUT_PULLUP);
+  pinMode(Home, INPUT_PULLUP);
 
   digitalWrite(S1, LOW);
   digitalWrite(S2, LOW);
   digitalWrite(S3, LOW);
   digitalWrite(S4, LOW);
 
-  while (digitalRead(K1) < HIGH) {    //return to the initial position
+  while (digitalRead(Home) < HIGH) {    //return to the initial position
     left(1);
   }
   motorOFF();
@@ -126,7 +114,7 @@ void closeLid() {
 void correctPositionRight() {
   switch (motorPosition) {
     case 3:
-      right(1); 
+      right(1);
       break;
     case 6:
       right(1);
@@ -140,7 +128,7 @@ void correctPositionRight() {
 void correctPositionLeft() {
   switch (motorPosition) {
     case 3:
-      left(1);  
+      left(1);
       break;
     case 6:
       left(1);
@@ -557,7 +545,7 @@ void loop()
     closeLid();      //Close
   }
   if (Loop == 100) {
-    while (digitalRead(K1) < HIGH) {
+    while (digitalRead(Home) < HIGH) {
       left(1);
     }
     motorOFF();
